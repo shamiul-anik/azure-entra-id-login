@@ -1,0 +1,2 @@
+﻿src/App.tsx(1,58): error TS6133: 'useMsal' is declared but its value is never read.
+src/components/ProfileContent.tsx(28,17): error TS6133: 'e' is declared but its value is never read.
