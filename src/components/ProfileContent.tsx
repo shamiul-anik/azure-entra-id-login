@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useMsal } from "@azure/msal-react";
+import { InteractionRequiredAuthError } from "@azure/msal-browser";
 import { loginRequest } from "../authConfig.ts";
 import { callMsGraph } from "../graph.ts"; // We will create this helper next
 
@@ -25,11 +26,15 @@ export const ProfileContent = () => {
           // Call Graph API with the token
           callMsGraph(response.accessToken).then((data) => setGraphData(data));
         })
-        .catch(() => {
-          // Fallback to interactive method if silent fails
-          instance.acquireTokenPopup(loginRequest).then((response) => {
-            callMsGraph(response.accessToken).then((data) => setGraphData(data));
-          });
+        .catch((error) => {
+          // Fallback to interactive method if silent fails due to interaction required
+          if (error instanceof InteractionRequiredAuthError) {
+            instance.acquireTokenPopup(loginRequest).then((response) => {
+              callMsGraph(response.accessToken).then((data) => setGraphData(data));
+            });
+          } else {
+            console.error("Silent token acquisition failed:", error);
+          }
         });
     }
   }, [instance, accounts]);
