@@ -19,7 +19,7 @@ export const SignOutButton = () => {
   return (
     <button
       onClick={() => handleLogout("popup")}
-      className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+      className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer"
     >
       Sign Out
     </button>
