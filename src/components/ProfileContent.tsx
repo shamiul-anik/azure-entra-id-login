@@ -8,12 +8,15 @@ interface UserData {
   displayName?: string;
   mail?: string;
   jobTitle?: string;
+  officeLocation?: string;
 }
 
 export const ProfileContent = () => {
   const { instance, accounts, inProgress } = useMsal();
   const [graphData, setGraphData] = useState<UserData | null>(null);
   const [profileError, setProfileError] = useState<string | null>(null);
+
+  console.log("ProfileContent rendered. graphData:", graphData, "InProgress:", inProgress);
 
   useEffect(() => {
     let isMounted = true;
@@ -65,8 +68,9 @@ export const ProfileContent = () => {
       {graphData ? (
         <>
           <h3 className="text-lg font-bold">Welcome, {graphData.displayName}</h3>
-          <p><strong>Email:</strong> {graphData.userPrincipalName || "N/A"}</p>
+          <p><strong>Email:</strong> {graphData.mail || "N/A"}</p>
           <p><strong>Job Title:</strong> {graphData.jobTitle || "N/A"}</p>
+          <p><strong>Office Location:</strong> {graphData.officeLocation || "N/A"}</p>
         </>
       ) : profileError ? (
         <p>{profileError}</p>
