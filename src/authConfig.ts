@@ -9,6 +9,7 @@ const msalConfig: Configuration = {
   },
   cache: {
     cacheLocation: "sessionStorage", // This configures where your cache will be stored
+    storeAuthStateInCookie: true, // Set this to "true" if you are having issues on IE11 or Edge
   },
   system: {
     loggerOptions: {
@@ -38,6 +39,7 @@ const msalConfig: Configuration = {
 // Scopes required for the Microsoft Graph API (basic profile info)
 export const loginRequest = {
   scopes: ["User.Read"],
+  navigateToLoginRequestUrl: false,
 };
 
 export default msalConfig;

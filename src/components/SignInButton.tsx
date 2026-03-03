@@ -4,15 +4,15 @@ import { loginRequest } from "../authConfig.ts";
 export const SignInButton = () => {
   const { instance } = useMsal();
 
-  const handleLogin = (loginType: "popup" | "redirect") => {
-    if (loginType === "popup") {
-      instance.loginPopup(loginRequest).catch((e) => {
-        console.error(e);
-      });
-    } else if (loginType === "redirect") {
-      instance.loginRedirect(loginRequest).catch((e) => {
-        console.error(e);
-      });
+  const handleLogin = async (loginType: "popup" | "redirect") => {
+    try {
+      if (loginType === "popup") {
+        await instance.loginPopup(loginRequest);
+      } else if (loginType === "redirect") {
+        await instance.loginRedirect(loginRequest);
+      }
+    } catch (e) {
+      console.error("Login failed:", e);
     }
   };
 
